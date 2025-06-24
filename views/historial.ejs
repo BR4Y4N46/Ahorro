@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Historial de Ahorros</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <div class="container glass">
+    <h1>📈 Historial de Ahorros</h1>
+    <canvas id="grafico" width="400" height="200"></canvas>
+    <a href="/" class="btn" style="margin-top: 20px; display: inline-block;">Volver</a>
+  </div>
+
+  <script>
+    const fechas = <%- JSON.stringify(fechas) %>;
+    const totales = <%- JSON.stringify(totales) %>;
+
+    const ctx = document.getElementById('grafico').getContext('2d');
+    const chart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: fechas,
+        datasets: [{
+          label: 'Total Ahorrado',
+          data: totales,
+          fill: true,
+          borderColor: '#ffffff',
+          backgroundColor: 'rgba(255, 255, 255, 0.1)',
+          tension: 0.3,
+          pointBackgroundColor: '#ffffff',
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true,
+            ticks: {
+              callback: function(value) {
+                return '$' + value.toLocaleString();
+              }
+            }
+          },
+          x: {
+            ticks: {
+              color: "#fff"
+            }
+          }
+        },
+        plugins: {
+          legend: {
+            labels: {
+              color: "#fff"
+            }
+          }
+        }
+      }
+    });
+  </script>
+</body>
+</html>
